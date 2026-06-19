@@ -3,153 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khagesh Nexa-System | Premium Web Apps Store</title>
+    <title>Khagesh Nexa-System | Software Store</title>
     <style>
         :root {
             --p: #6366f1;
-            --bg: #0f172a;
-            --card: rgba(30, 41, 59, 0.7);
-            --t: #f8fafc;
-            --wa: #25d366;
+            --p-glow: rgba(99, 102, 241, 0.2);
+            --bg: #090d16;
+            --card: rgba(22, 32, 51, 0.65);
+            --border: rgba(255, 255, 255, 0.08);
+            --t: #f1f5f9;
+            --t-sub: #94a3b8;
+            --wa: #22c55e;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: var(--bg); color: var(--t); min-height: 100vh; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', -apple-system, sans-serif; }
+        body { background: var(--bg); color: var(--t); min-height: 100vh; display: flex; flex-direction: column; padding: 15px; overflow-x: hidden; }
         
-        .glass { 
-            background: var(--card); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 16px; 
+        .container { max-width: 600px; margin: auto; width: 100%; flex: 1; display: flex; flex-direction: column; }
+        
+        header { text-align: center; padding: 30px 0 20px; }
+        header h1 { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+        header h1 span { color: var(--p); text-shadow: 0 0 15px var(--p-glow); }
+        header p { color: var(--t-sub); font-size: 13px; margin-top: 6px; }
+
+        .banner-policy {
+            background: linear-gradient(135deg, rgba(99,102,241,0.1) 0%, rgba(0,0,0,0) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 25px;
+            font-size: 12px;
+            line-height: 1.5;
+            position: relative;
         }
-        
-        .wrapper { max-width: 800px; margin: auto; padding: 20px; }
-        
-        header { text-align: center; padding: 40px 0 20px 0; }
-        header h1 { font-size: 2.2rem; color: #fff; font-weight: 800; letter-spacing: -0.5px; }
-        header h1 span { color: var(--p); }
-        header p { opacity: 0.6; margin-top: 8px; font-size: 14px; }
+        .banner-policy b { color: #fff; }
 
-        .pricing-note {
-            padding: 15px;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 13px;
-            border-left: 4px solid var(--p);
+        .apps-list { display: flex; flex-direction: column; gap: 15px; }
+        
+        .app-card { 
+            background: var(--card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.2s, border-color 0.2s;
         }
-
-        .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        @media(min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
-
-        .app-card { padding: 20px; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
-        .app-card:hover { transform: translateY(-5px); border-color: var(--p); }
-        .app-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 5px; }
-        .app-tag { display: inline-block; background: rgba(99, 102, 241, 0.15); color: #a5b4fc; font-size: 10px; padding: 3px 8px; border-radius: 12px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase; }
-        .app-desc { font-size: 13px; opacity: 0.7; line-height: 1.5; margin-bottom: 20px; min-height: 60px; }
+        .app-card:hover { border-color: rgba(99, 102, 241, 0.4); transform: translateY(-2px); }
         
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { padding: 10px; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; transition: 0.2s; }
-        .btn-demo { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
-        .btn-demo:hover { background: rgba(255,255,255,0.1); }
-        .btn-buy { background: var(--wa); color: #fff; }
-        .btn-buy:hover { background: #20ba5a; }
+        .app-header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .app-title { font-size: 16px; font-weight: 700; color: #fff; }
+        .app-tag { background: rgba(99, 102, 241, 0.12); color: #818cf8; font-size: 9px; padding: 2px 8px; border-radius: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+        
+        .app-desc { font-size: 12.5px; color: var(--t-sub); line-height: 1.5; }
+        
+        .app-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.04); }
+        .app-price { font-size: 15px; font-weight: 700; color: #fff; }
+        .app-price span { color: var(--p); font-size: 11px; font-weight: normal; color: var(--t-sub); }
+        
+        .actions { display: flex; gap: 8px; }
+        .btn { padding: 8px 14px; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        
+        .btn-demo { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255,255,255,0.08); }
+        .btn-demo:hover { background: rgba(255, 255, 255, 0.1); }
+        
+        .btn-buy { background: var(--wa); color: #fff; gap: 4px; }
+        .btn-buy:hover { background: #1ea951; }
 
-        footer { text-align: center; margin-top: 60px; padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.05); }
-        footer p { font-size: 11px; opacity: 0.4; }
-        footer .links { margin-top: 10px; }
-        footer a { color: var(--p); font-size: 12px; text-decoration: none; margin: 0 10px; font-weight: 600; }
+        footer { text-align: center; padding: 35px 0 15px; color: var(--t-sub); font-size: 11px; margin-top: auto; }
+        footer p { opacity: 0.5; }
+        .footer-links { margin-top: 8px; display: flex; justify-content: center; gap: 15px; }
+        .footer-links a { color: var(--p); text-decoration: none; font-weight: 600; }
+        .footer-links a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
+<div class="container">
     <header>
         <h1>Khagesh <span>Nexa-System</span></h1>
-        <p>Premium High-Capacity Business Web Applications</p>
+        <p>Premium & Offline-First Web Applications Store</p>
     </header>
 
-    <div class="pricing-note glass">
-        💡 <b>Transparent Policy:</b> Every software comes with a Lifetime License key. Any customized modification or client branding changes will incur a standard fee of <b>₹500 per modification</b>.
+    <div class="banner-policy">
+        ⚡ <b>Transparent Pricing Policy:</b> All platforms include a permanent Lifetime License key. Any custom text adjustments or business branding changes will incur a standard setup processing fee of <b>₹500 per modification</b>.
     </div>
 
-    <div class="grid" id="appsGrid">
-        <!-- Apps will be dynamically injected by JS -->
+    <div class="apps-list" id="storeContainer">
+        <!-- Live App Cards Injected Dynamically -->
     </div>
 
     <footer>
         <p>© 2026 Powered by Khagesh Nexa-System. All Rights Reserved.</p>
-        <div class="links">
-            <a href="mailto:magicalkhagesh888@gmail.com">📩 Email Us</a>
-            <a href="https://www.instagram.com/khagesh_ai_nexa?igsh=a2tjMGRpMWRkeWtx" target="_blank">📸 Instagram</a>
+        <div class="footer-links">
+            <a href="mailto:magicalkhagesh888@gmail.com">📩 Corporate Email</a>
+            <a href="https://www.instagram.com/khagesh_ai_nexa?igsh=a2tjMGRpMWRkeWtx" target="_blank">📸 Instagram Profile</a>
         </div>
     </footer>
 </div>
 
 <script>
-    // --- central app configurations ---
-    const myApps = [
-        {
-            title: "Nexa LibMaster Pro v2.4",
-            tag: "Library Management",
-            desc: "Advanced multi-shift slot system matrix with offline IndexedDB storage (50k+ student capacity), PDF reports, and WhatsApp automation.",
-            demo: "https://your-cloudflare-or-demo-link.pages.dev/library", // Change to actual links later
-            price: "₹1,999"
-        },
+    // Live links perfectly configured with baseline competitive launch prices
+    const appsData = [
         {
             title: "Nexa EduMaster ERP v51.9.3",
-            tag: "Coaching / School Management",
-            desc: "Comprehensive ERP featuring anti-tamper trial security, monthly/weekly attendance sheet downloads, bulk fee reminders, and full billing matrix.",
-            demo: "https://your-cloudflare-or-demo-link.pages.dev/edumaster",
-            price: "₹3,499"
-        },
-        {
-            title: "Nexa Optical Pro Elite",
-            tag: "Retail & Eye Clinic",
-            desc: "Custom inventory management, udhaar/credit tracking layout, prescription data logging, and auto receipt generation tools.",
-            demo: "https://your-cloudflare-or-demo-link.pages.dev/optical",
+            category: "Institutes & Coaching",
+            desc: "Complete operational control. High-capacity structural management, 7-day automated trial screen lock, and monthly attendance PDF exports.",
+            demo: "https://edumaster-6.vercel.app/",
             price: "₹2,499"
         },
         {
-            title: "Lawyer Case Manager Pro",
-            tag: "Legal Practice",
-            desc: "Secure storage for clients records, hearing dates matrix tracker, integrated glassmorphism UI layout, and active backup features.",
-            demo: "https://your-cloudflare-or-demo-link.pages.dev/lawyer",
-            price: "₹2,999"
+            title: "Nexa LibMaster Pro v2.4",
+            category: "Digital Library",
+            desc: "Advanced multi-shift matrix slot allocation system. Dynamically isolates morning/evening slots safely on identical physical seats.",
+            demo: "https://library-manager-seven-psi.vercel.app/",
+            price: "₹1,499"
+        },
+        {
+            title: "Nexa Retail-X Matrix",
+            category: "Billing & Retail",
+            desc: "Super fast client billing engine. Instant automated WhatsApp message integration and clean transaction invoice tracking capabilities.",
+            demo: "https://billing-master-dusky.vercel.app/",
+            price: "₹1,999"
+        },
+        {
+            title: "Nexa Pharma Manager",
+            category: "Medical & Pharmacy",
+            desc: "Sleek stock distribution framework. Optimizes inventory levels, handles client balances, and monitors transaction sheets securely.",
+            demo: "https://khagesh-pharma-nexa-pro.vercel.app/",
+            price: "₹1,999"
+        },
+        {
+            title: "Nexa Gym Manager Pro",
+            category: "Fitness & Gyms",
+            desc: "Active user membership workflow tracker. Monitors active plans status, due payment matrices, and sends layout alert warnings.",
+            demo: "https://gym-manager-20-0.vercel.app/",
+            price: "₹1,499"
         }
     ];
 
-    const MY_NUMBER = "8882737014"; // Routed internally for direct WhatsApp redirecting
+    const INTERNAL_PHONE = "8882737014"; // Protected internal WhatsApp destination link
 
-    function initStore() {
-        const grid = document.getElementById('appsGrid');
-        let html = '';
+    function buildStore() {
+        const targetGrid = document.getElementById('storeContainer');
+        let markup = '';
         
-        myApps.forEach(app => {
-            let encodedMsg = encodeURIComponent(`Hello Khagesh Nexa-System! I tested the Live Demo of "${app.title}" on your portfolio and I would like to purchase the lifetime license key for my business.`);
-            let waLink = `https://wa.me/91${MY_NUMBER}?text=${encodedMsg}`;
+        appsData.forEach(item => {
+            let directMsg = encodeURIComponent(`Hello Khagesh Nexa-System! I spent some time reviewing the Live Demo for "${item.title}" on your store platform. I want to finalize my purchase for a permanent lifetime license activation key.`);
+            let linkWA = `https://wa.me/91${INTERNAL_PHONE}?text=${directMsg}`;
             
-            html += `
-                <div class="app-card glass">
-                    <div>
-                        <div class="app-title">${app.title}</div>
-                        <span class="app-tag">${app.tag}</span>
-                        <div class="app-desc">${app.desc}</div>
+            markup += `
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-title">${item.title}</div>
+                        <span class="app-tag">${item.category}</span>
                     </div>
-                    <div>
-                        <div style="font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 12px;">Base Price: <span style="color: #6366f1;">${app.price}</span></div>
-                        <div class="btn-group">
-                            <a href="${app.demo}" target="_blank" class="btn btn-demo">Try Live Demo</a>
-                            <a href="${waLink}" target="_blank" class="btn btn-buy">Buy License</a>
+                    <div class="app-desc">${item.desc}</div>
+                    <div class="app-footer">
+                        <div class="app-price">${item.price} <span>/ LifeTime</span></div>
+                        <div class="actions">
+                            <a href="${item.demo}" target="_blank" class="btn btn-demo">Try Demo</a>
+                            <a href="${linkWA}" target="_blank" class="btn btn-buy">Buy Key</a>
                         </div>
                     </div>
                 </div>
             `;
         });
         
-        grid.innerHTML = html;
+        targetGrid.innerHTML = markup;
     }
 
-    // Launch the catalog store
-    initStore();
+    // Initialize layout setup rendering
+    buildStore();
 </script>
 </body>
 </html>
